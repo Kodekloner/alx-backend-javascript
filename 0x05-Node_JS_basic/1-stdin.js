@@ -1,7 +1,13 @@
-process.stderr.write("Welcome to Holberton School, what is your name?\n");
-process.stdin.on('data', data => {
-  console.log(`You typed : ${data.toString().trim()}`);
+process.stdout.write('Welcome to Holberton School, what is your name?\n');
 
-  console.log('This important software is now closing')
-  process.exit(0)
-})
+process.stdin.on('readable', () => {
+  const chunk = process.stdin.read();
+
+  if (chunk) {
+    process.stdout.write(`Your name is: ${chunk}`);
+  }
+});
+
+process.stdin.on('end', () => {
+  process.stdout.write('This important software is now closing\n');
+});
